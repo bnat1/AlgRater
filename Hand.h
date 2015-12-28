@@ -10,6 +10,7 @@
 #define HAND_H
 
 #include <string>
+#include <vector>
 #include <map>
 #include <algorithm>
 
@@ -19,10 +20,9 @@ class Hand{
 	public:
 		void reset();
 		int getPosition();
+		int getRegripPosition(string move);
 		void setPosition(int p);
-		bool inAvail(int mapIndex, string move);
-		bool checkRegrip(string move);
-		void doRegrip(int offset);	
+		bool isAvail(int mapIndex, string move);
 	protected:
 		int position;
 		map <int, vector<string> > availableMoves;

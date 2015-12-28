@@ -25,14 +25,18 @@ void TwoHands::resetHands(){
 	lh.reset();
 	rh.reset();
 }
-
+Hand* TwoHands::getLeftHand(){
+	return &lh;
+}
+Hand* TwoHands::getRightHand(){
+	return &rh;
+}
 bool TwoHands::handleLR(string move){
 	int lOffset = 0;
 	int rOffset = 0;
 
 	if(move == "L"){
 		lOffset = -1;
-		lastHand = 'lh';
 	}
 	else if(move == "L'"){
 		lOffset = 1;
@@ -61,7 +65,7 @@ bool TwoHands::handleLR(string move){
 	}
 	
 	//check if offset leads to regrip
-	if(abs(lh.getPosition() + lOffset) > POS_EXTREME || abs(rh.getPosition() + rOffset) > POS_EXTREME	//end up in illegal position: regrip, do move, end up in starting position
+	if(abs(lh.getPosition() + lOffset) >= POS_EXTREME || abs(rh.getPosition() + rOffset) >= POS_EXTREME	//end up in illegal position: regrip, do move, end up in starting position
 		|| abs((lh.getPosition() + lOffset) - (rh.getPosition() + rOffset)) > MAX_HAND_DIFF){			//awk hand position: same
 		return true;											
 	} 
@@ -76,25 +80,34 @@ bool TwoHands::handleLR(string move){
 void TwoHands::doMove(string move){
 	lastMoveRegrip = false;
 	if(move[0] == 'L'){
-		lastHandRegrip = handleLR(move);
+		lastMoveRegrip = handleLR(move);
 		lastHand = 'l';
 	}
 	else if(move[0] == 'R'){
-		lastHandRegrip = hadleLR(move);
-		lasthand = 'r';
+		lastMoveRegrip = handleLR(move);
+		lastHand = 'r';
 	}
-	else if(lh.checkRegrip(move) && rh.checkRegrip(move)){												//not available for either hand: choose easiest regrip
-		lhDistance = lh.getRegripDistance(move);
-		rhDistance = rh.getRegripDistance(move);
-		if(abs(lhDistance) <= abs(rhDistance)){
-			lh.doRegrip(lhDistance);
-			lasthand = 'l';
+	else if(lh.isAvail(lh.getPosition(), move)){			//no regrip required
+		lastHand = 'l';
+	}
+	else if(rh.isAvail(rh.getPosition(), move)){
+		lastHand = 'r';
+	}
+	else{
+		int lhRegripPos = lh.getRegripPosition(move);		//not available for either hand: choose easiest regrip
+		int rhRegripPos = rh.getRegripPosition(move);
+		int lhDistance = abs(lh.getPosition() - lhRegripPos);
+		int rhDistance = abs(rh.getPosition() - rhRegripPos);
+		//cout << "lhDistance:" << lhDistance << endl;
+		//cout << "rhDistance:" << rhDistance << endl;
+		if(lhDistance <= rhDistance){
+			lh.setPosition(lhRegripPos);
+			lastHand = 'l';
 		}
 		else{
-			rh.doRegrip(rhDistance);
-			lasthand = 'r';
+			rh.setPosition(rhRegripPos);
+			lastHand = 'r';
 		}
 		lastMoveRegrip = true;
 	}
-	//else move is good, no regrip
 }

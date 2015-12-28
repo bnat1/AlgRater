@@ -1,7 +1,7 @@
 /*
 file: Alg.h
 author: Nat Baylon
-modified: 10/24/2015 10:16 AM
+modified: 10/27/2015 1:53 AM
 description: definition of Alg class
 */
 
@@ -10,23 +10,27 @@ description: definition of Alg class
 
 #include <vector>
 #include <string>
-#include <stdio>
+#include <stdio.h>
 #include <iostream>
 
 using namespace std;
 
 class Alg{
 public:
+	Alg(vector<string> m);			//constructor with moves vector as param
 	void showAlg();					//display moves
 	void showStats();				//display stats
 
+	string getMove(int i);
+	vector<string> getMoves();
 	int getQTM();
 	int getHTM();
 	int getNumRegrips();
 	float getRLratio();
 	float getGrade();
 
-	void setMoves(vector<string> m);
+	void addMove(string m);			//add individual move to end of moves
+	void setMoves(vector<string> m);//set all moves
 	void setQTM(int q);
 	void setHTM(int h);
 	void setNumRegrips(int n);
