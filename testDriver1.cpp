@@ -16,8 +16,13 @@ using namespace std;
 
 int main(){
 	TwoHands TH;
+<<<<<<< HEAD
 	//Alg alg({"R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'"});
 	Alg alg({"R", "U2", "R'", "U'", "R", "U2", "L'", "U", "R'", "U'", "L"});
+=======
+	Alg alg({"R", "U", "R'", "U'", "R'", "F", "R2", "U'", "R'", "U'", "R", "U", "R'", "F'"});
+
+>>>>>>> d163256a5c4b07f6ef7823bd47c5c8e2c3e9e359
 	string move;	
 	int htmCount = 0;	
 	int qtmCount = 0;
