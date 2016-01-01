@@ -10,7 +10,7 @@
 #define HAND_H
 
 #include <string>
-#include <vector>
+//#include <vector>
 #include <map>
 #include <algorithm>
 
@@ -18,14 +18,16 @@ using namespace std;
 
 class Hand{
 	public:
+		Hand();
+		Hand(map <int, std::vector<string> > avMoves);
 		void reset();
 		int getPosition();
 		int getRegripPosition(string move);
 		void setPosition(int p);
 		bool isAvail(int mapIndex, string move);
-	protected:
+	private:
 		int position;
-		map <int, vector<string> > availableMoves;
+		map<int, std::vector<string> > availableMoves;
 };
 
 #endif

@@ -18,11 +18,11 @@ void Alg::showAlg(){
 }			
 
 void Alg::showStats(){
-	cout << "QTM: " << QTM
-		<< "HTM: " << HTM
-		<< "regrips: " << numRegrips
-		<< "hand ratio r/l: " << rlRatio
-		<< "total score: " << grade << endl;
+	cout << "\tQTM: " << QTM
+		<< " HTM: " << HTM
+		<< " regrips: " << numRegrips
+		<< " dominant hand usage: " << domRatio
+		<< " total grade: " << grade << endl;
 }				
 string Alg::getMove(int i){
 	return moves[i];
@@ -39,8 +39,8 @@ int Alg::getHTM(){
 int Alg::getNumRegrips(){
 	return numRegrips;
 }
-float Alg::getRLratio(){
-	return rlRatio;
+float Alg::getDomRatio(){
+	return domRatio;
 }
 float Alg::getGrade(){
 	return grade;
@@ -60,8 +60,8 @@ void Alg::setHTM(int h){
 void Alg::setNumRegrips(int n){
 	numRegrips = n;
 }
-void Alg::setRLratio(float r){
-	rlRatio = r ;
+void Alg::setDomRatio(float r){
+	domRatio = r ;
 }
 void Alg::setGrade(float g){
 	grade = g;

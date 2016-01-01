@@ -12,7 +12,12 @@
 
 
 TwoHands::TwoHands(){
-resetHands();
+	lh = Hand({{-1,{"B", "B2","F'","F2"}},
+				{0,{"U'", "U2", "D", "D2"}},
+				{1,{"F", "F2", "B'", "B2"}}});
+	rh = Hand({{-1,{"B'", "B2", "F", "F'", "F2"}},
+				{0,{"U", "U2", "D'", "D2"}},
+				{1,{"F'","F2", "B", "B2"}}});
 }
 
 char TwoHands::getLastHand(){
@@ -25,13 +30,15 @@ void TwoHands::resetHands(){
 	lh.reset();
 	rh.reset();
 }
+/*
 Hand* TwoHands::getLeftHand(){
 	return &lh;
 }
 Hand* TwoHands::getRightHand(){
 	return &rh;
 }
-bool TwoHands::handleLR(string move){
+*/
+bool TwoHands::handleLR(std::string move){
 	int lOffset = 0;
 	int rOffset = 0;
 
@@ -77,7 +84,7 @@ bool TwoHands::handleLR(string move){
 	}
 	
 }
-void TwoHands::doMove(string move){
+void TwoHands::doMove(std::string move){
 	lastMoveRegrip = false;
 	if(move[0] == 'L'){
 		lastMoveRegrip = handleLR(move);

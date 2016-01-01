@@ -26,7 +26,7 @@ public:
 	int getQTM();
 	int getHTM();
 	int getNumRegrips();
-	float getRLratio();
+	float getDomRatio();
 	float getGrade();
 
 	void addMove(string m);			//add individual move to end of moves
@@ -34,7 +34,7 @@ public:
 	void setQTM(int q);
 	void setHTM(int h);
 	void setNumRegrips(int n);
-	void setRLratio(float r);
+	void setDomRatio(float r);
 	void setGrade(float g);
 
 private:
@@ -42,8 +42,7 @@ private:
 	int QTM;
 	int HTM;
 	int numRegrips;
-	float rlRatio;
+	float domRatio;
 	float grade;
-
 };
 #endif

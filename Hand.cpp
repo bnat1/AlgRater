@@ -9,6 +9,13 @@
 #include "Hand.h"
 #define NOT_FOUND 10
 
+Hand::Hand(){}
+
+Hand::Hand(map<int, vector<string> > avMoves){
+	availableMoves = avMoves;
+	position = 0;
+}
+
 void Hand::reset(){
 	position = 0;
 }

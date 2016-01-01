@@ -1,5 +1,5 @@
-all: testDriver1.o LeftHand.o RightHand.o Hand.o TwoHands.o AlgRater.o Alg.o
-	g++ -Wall -std=c++11 testDriver1.o LeftHand.o RightHand.o Hand.o TwoHands.o AlgRater.o Alg.o -o AlgRater.out
+all: testDriver1.o Hand.o TwoHands.o AlgRater.o Alg.o
+	g++ -Wall -std=c++11 testDriver1.o Hand.o TwoHands.o AlgRater.o Alg.o -o AlgRater.out
 
 Alg.o: Alg.cpp
 	g++ -Wall -c -std=c++11 Alg.cpp
@@ -12,12 +12,6 @@ TwoHands.o: TwoHands.cpp
 
 Hand.o: Hand.cpp
 	g++ -Wall -c -std=c++11 Hand.cpp
-
-RightHand.o: RightHand.cpp
-	g++ -Wall -c -std=c++11 RightHand.cpp
-
-LeftHand.o: LeftHand.cpp
-	g++ -Wall -c -std=c++11 LeftHand.cpp
 
 testDriver1.o: testDriver1.cpp
 	g++ -Wall -c -std=c++11 testDriver1.cpp

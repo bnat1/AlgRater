@@ -7,29 +7,31 @@ description: def of TwoHands
 #ifndef TWOHANDS_H
 #define TWOHANDS_H
 
-#include <stdio.h>
+//#include <stdio.h>
 //#include <iostream>
 //#include <cstdlib>
-#include "LeftHand.h"
-#include "RightHand.h"
+//#include "LeftHand.h"
+//#include "RightHand.h"
+#include <string>
+#include "Hand.h"
 
-using namespace std;
+//using namespace std;
 
 class TwoHands{
 	public:
 		TwoHands();
 		void resetHands();
 		void doMove(string move);
-		Hand* getLeftHand();
-		Hand* getRightHand();
+		//Hand* getLeftHand();
+		//Hand* getRightHand();
 		char getLastHand();
 		bool getLastMoveRegrip();
 	private:
 		bool handleLR(string move);
 		bool lastMoveRegrip;		//yes: true, no: false
 		char lastHand;				//'l' or 'r'
-		LeftHand lh;
-		RightHand rh;
+		Hand lh;
+		Hand rh;
 };
 
 #endif
