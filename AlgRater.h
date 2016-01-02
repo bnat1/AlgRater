@@ -24,15 +24,15 @@ class AlgRater{
 		void gradeAlgs();			//calc stats for all algs: QTM, HTM, numRegrips, lrRatio, grade
 		void sortAlgs();			//sort algs descending using grade
 		void clearAlgs();			//delete contents of allAlgs, reset numAlgs
+	private:
+		vector<Alg> allAlgs;
+		int numAlgs;
 		void updateHTM(int &hCount);
 		void updateQTM(int &qCount, string m);
 		void updateRegrips(int &regripCount, TwoHands &T);
 		void updateRLMoves(int &rMoves, int &lMoves, TwoHands &T);
 		float calcDomRatio(int rMoves, int lMoves, int htmCount);
 		float calcGrade(int qCount, int hCount, int regripCount, int domRatio);
-	private:
-		vector<Alg> allAlgs;
-		int numAlgs;
 };
 
 #endif 
