@@ -1,7 +1,7 @@
 /*
 file: Alg.h
 author: Nat Baylon
-modified: 10/27/2015 1:53 AM
+modified: 1/2/2015
 description: definition of Alg class
 */
 
@@ -17,9 +17,10 @@ using namespace std;
 
 class Alg{
 public:
+	Alg();							//default constructor
 	Alg(vector<string> m);			//constructor with moves vector as param
 	void showAlg();					//display moves
-	void showStats();				//display stats
+	void showStats();				//show stats for alg
 
 	string getMove(int i);
 	vector<string> getMoves();
@@ -27,6 +28,10 @@ public:
 	int getHTM();
 	int getNumRegrips();
 	float getDomRatio();
+	float getQTMGrade();
+	float getHTMGrade();
+	float getRegripGrade();
+	float getDomGrade();
 	float getGrade();
 
 	void addMove(string m);			//add individual move to end of moves
@@ -35,6 +40,10 @@ public:
 	void setHTM(int h);
 	void setNumRegrips(int n);
 	void setDomRatio(float r);
+	void setQTMGrade(float q);
+	void setHTMGrade(float h);	
+	void setRegripGrade(float r);
+	void setDomGrade(float d);
 	void setGrade(float g);
 
 private:
@@ -43,6 +52,11 @@ private:
 	int HTM;
 	int numRegrips;
 	float domRatio;
+
+	float QTMGrade;
+	float HTMGrade;
+	float regripGrade;
+	float domGrade;
 	float grade;
 };
 #endif

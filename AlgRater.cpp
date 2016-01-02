@@ -16,16 +16,52 @@ description: implentation of AlgRater class
 #define PREFERRED_HTM 12
 #define PREFERRED_DOM_RATIO 0.75
 #define PREFERRED_REGRIPS 3
-#define QTM_PENALTY 0.9
-#define HTM_PENALTY 0.8
-#define REGRIP_PENALTY 0.85
-#define DOM_PENALTY 0.95		//per .01 below
+#define QTM_PENALTY 0.1
+#define HTM_PENALTY 0.2
+#define REGRIP_PENALTY 0.15
+#define DOM_PENALTY 0.03		//per .01 below
 
 void AlgRater::addAlg(Alg a){
 	allAlgs.push_back(a);
+}
+void AlgRater::showPreferences(){
+	cout << "\n==========================================================================\n";
+	cout << "User Preferences: " << endl << endl
+		<< "\tDominant hand: " << DOM_HAND << endl
+		<< "\tRegrip weight: " << REGRIP_WT << endl
+		<< "\tDominant hand weight: " << DOM_WT << endl
+		<< "\tQTM weight: " << QTM_WT << endl
+		<< "\tHTM weight: " << HTM_WT << endl
+		<< "\tPreferred QTM: " << PREFERRED_QTM << endl
+		<< "\tPreferred HTM: " << PREFERRED_HTM << endl
+		<< "\tPreferred dominant hand usage: " << PREFERRED_DOM_RATIO << endl
+		<< "\tPreferred regrips: " << PREFERRED_REGRIPS << endl
+		<< "\tQTM penalty: " << QTM_PENALTY << endl
+		<< "\tHTM penalty: " << HTM_PENALTY << endl
+		<< "\tRegrip penalty: " << REGRIP_PENALTY << endl
+		<< "\tNon-dominant hand penalty: " << DOM_PENALTY << endl << endl; 
 }		
-void AlgRater::showTopX(int x){
-
+void AlgRater::showAllAlgs(){
+	cout << "\n==========================================================================\n";
+	cout << "All algs: " << endl << endl;
+	for(unsigned int i = 0; i < allAlgs.size(); i++){
+		cout << "Alg " << i << ":\t";
+		allAlgs[i].showAlg();
+		allAlgs[i].showStats();
+		cout << endl;
+	}
+	cout << endl;
+}
+void AlgRater::showTopX(unsigned int x){
+	cout << "\n==========================================================================\n";
+	cout << "Top " << x << " algs: " <<endl << endl;
+	for(unsigned int i = 0; i < x; i++){
+		cout << "Alg " << i << ":\t";
+		allAlgs[i].showAlg();
+		allAlgs[i].showStats();
+		cout << endl;
+	}
+	cout << endl;
 }
 void AlgRater::gradeAlgs(){
 	TwoHands TH;
@@ -35,6 +71,10 @@ void AlgRater::gradeAlgs(){
 	int rMoves;
 	int lMoves;
 	float domRatio;
+	float qtmGrade; 
+	float htmGrade;
+	float domGrade;
+	float regripGrade;
 	float grade;
 
 	for(unsigned int i = 0;  i < allAlgs.size(); i++){
@@ -57,12 +97,16 @@ void AlgRater::gradeAlgs(){
 			updateRLMoves(rMoves, lMoves, TH);
 		}
 		domRatio = calcDomRatio(rMoves, lMoves, htmCount);
-		grade = calcGrade(qtmCount, htmCount, numRegrips, domRatio);
+		calcGrade(qtmCount, htmCount, numRegrips, domRatio, qtmGrade, htmGrade, domGrade, regripGrade, grade);
 
 		allAlgs[i].setHTM(htmCount);
 		allAlgs[i].setQTM(qtmCount);
 		allAlgs[i].setNumRegrips(numRegrips);
 		allAlgs[i].setDomRatio(domRatio);
+		allAlgs[i].setQTMGrade(qtmGrade);
+		allAlgs[i].setHTMGrade(htmGrade);
+		allAlgs[i].setDomGrade(domGrade);
+		allAlgs[i].setRegripGrade(regripGrade);
 		allAlgs[i].setGrade(grade);
 	}
 }
@@ -102,36 +146,37 @@ float AlgRater::calcDomRatio(int rMoves, int lMoves, int htmCount){
 		return (float)lMoves/(float)htmCount;
 	}
 }
-float AlgRater::calcGrade(int qCount, int hCount, int regripCount, int domRatio){
-	float regripGrade = 100;
-	float qtmGrade = 100;
-	float htmGrade = 100;
-	float domGrade = 100;
-	float totalGrade;
+void AlgRater::calcGrade(int qCount, int hCount, int regripCount, float domRatio, float &qtmGrade, float &htmGrade, float &domGrade, float &regripGrade, float &totalGrade){
+	regripGrade = 100;
+	qtmGrade = 100;
+	htmGrade = 100;
+	domGrade = 100;
 
 	//lose points for every violation past preferred number
 	//regrips
 	if(regripCount > PREFERRED_REGRIPS){
 		for(int r = regripCount - PREFERRED_REGRIPS; r > 0; r--){
-			regripGrade *= REGRIP_PENALTY;
+			regripGrade *= 1 - REGRIP_PENALTY;
 		}
 	}
 	//qtm
 	if(qCount > PREFERRED_QTM){
 		for(int q = qCount - PREFERRED_QTM; q > 0; q--){
-			qtmGrade *= QTM_PENALTY;
+			qtmGrade *= 1 - QTM_PENALTY;
 		}
 	}
 	//htm
 	if(hCount > PREFERRED_HTM){
 		for(int h = hCount - PREFERRED_HTM; h > 0; h--){
-			htmGrade *= HTM_PENALTY;
+			htmGrade *= 1 - HTM_PENALTY;
 		}
 	}
 	//domRatio
+	//cout << "dom ratio: "<< domRatio << endl;
+	//cout << "preferred dom ratio: " << PREFERRED_DOM_RATIO <<  endl;
 	if(domRatio < PREFERRED_DOM_RATIO){
 		for(float d = PREFERRED_DOM_RATIO - domRatio; d > 0; d -= .01){
-			domGrade *= DOM_PENALTY;
+			domGrade *= 1 - DOM_PENALTY;
 		}
 	}
 	//weight categories
@@ -142,11 +187,15 @@ float AlgRater::calcGrade(int qCount, int hCount, int regripCount, int domRatio)
 
 	//sum categories
 	totalGrade = regripGrade + qtmGrade + htmGrade + domGrade;
-	return totalGrade;
 }
+/*
+bool AlgRater::compareAlgs(Alg a, Alg b){
+	return a.getGrade() > b.getGrade();
+}
+ */
 void AlgRater::sortAlgs(){
-
+	std::sort(allAlgs.begin(), allAlgs.end(), compareAlgs());
 }			
 void AlgRater::clearAlgs(){
-
+	allAlgs.clear();
 }			

@@ -1,11 +1,12 @@
 /*
 file: Alg.cpp
 author: Nat Baylon
-modified: 10/27/2015 1:53 AM
+modified: 1/2/2015
 description: implemetation of Alg class
 */
 
 #include "Alg.h"
+Alg::Alg(){}
 
 Alg::Alg(vector<string> m){
 moves = m;
@@ -18,12 +19,17 @@ void Alg::showAlg(){
 }			
 
 void Alg::showStats(){
-	cout << "\tQTM: " << QTM
-		<< " HTM: " << HTM
-		<< " regrips: " << numRegrips
-		<< " dominant hand usage: " << domRatio
-		<< " total grade: " << grade << endl;
-}				
+	//show raw data
+	cout << "\t|QTM: " << QTM
+		<< "| HTM: " << HTM
+		<< "| regrips: " << numRegrips
+		<< "| dominant hand usage: " << domRatio << '|'<< endl
+		<< "\t|QTM Grade: " << QTMGrade
+		<< "|HTM Grade: " << HTMGrade
+		<< "|Regrip grade: " << regripGrade
+		<< "|Dominant hand grade: " << domGrade << '|' << endl
+		<< "\t|Total grade: " << grade << "|" << endl;
+}			
 string Alg::getMove(int i){
 	return moves[i];
 }
@@ -41,6 +47,18 @@ int Alg::getNumRegrips(){
 }
 float Alg::getDomRatio(){
 	return domRatio;
+}
+float Alg::getQTMGrade(){
+	return QTMGrade;
+}
+float Alg::getHTMGrade(){
+	return HTMGrade;
+}
+float Alg::getRegripGrade(){
+	return regripGrade;
+}
+float Alg::getDomGrade(){
+	return domGrade;
 }
 float Alg::getGrade(){
 	return grade;
@@ -62,6 +80,18 @@ void Alg::setNumRegrips(int n){
 }
 void Alg::setDomRatio(float r){
 	domRatio = r ;
+}
+void Alg::setQTMGrade(float q){
+	QTMGrade = q;
+}
+void Alg::setHTMGrade(float h){
+	HTMGrade = h;
+}
+void Alg::setRegripGrade(float r){
+	regripGrade = r;
+}
+void Alg::setDomGrade(float d){
+	domGrade = d;
 }
 void Alg::setGrade(float g){
 	grade = g;
