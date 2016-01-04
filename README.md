@@ -3,7 +3,7 @@ This c++ program go through large amounts of 3x3 algs to help determine if they 
 
 The idea is to input a filename for a file that contains many algorithms, then the program grades them, sorts them, and provides the top-x algs.
 
-There is no driver yet, but it will prompt for a filename, then ask how many algs to display.
-then it gives algs to the AlgRater, tells the algrater to grade the algs, sort the algs, and display the top x algs.
+The current driver gives the AlgRater several algorithms, and calls AlgRater's functions to pass them through two hands, grade the algs, sort them, and display them in order from best to worst.
 
-AlgRater determines stats for the algs by putting individual moves through TwoHands, and then AlgRater can check the status of Twohands: if the last move was a regrip, and if the last move was performed by left/right hand
+The remaining steps to complete this program are to create a file parser that takes a file with algs and pushes Algs to AlgRater, and create a UI. The first UI will just be c++ command line, but future versions will possibly be online with a cgi script for more accessability.
+
