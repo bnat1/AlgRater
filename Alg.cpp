@@ -6,29 +6,33 @@ description: implemetation of Alg class
 */
 
 #include "Alg.h"
-Alg::Alg(){}
+Alg::Alg(){
+	isGraded = false;
+}
 
 Alg::Alg(vector<string> m){
-moves = m;
+	moves = m;
+	isGraded = false;
 }
 void Alg::showAlg(){
 	for(unsigned int i = 0; i < moves.size(); i++){
 		cout << moves[i] << ' ';
 	}
 	cout << endl;
-}			
-
-void Alg::showStats(){
-	//show raw data
-	cout << "\t|QTM: " << QTM
-		<< "| HTM: " << HTM
-		<< "| regrips: " << numRegrips
-		<< "| dominant hand usage: " << domRatio << '|'<< endl
-		<< "\t|QTM Grade: " << QTMGrade
-		<< "|HTM Grade: " << HTMGrade
-		<< "|Regrip grade: " << regripGrade
-		<< "|Dominant hand grade: " << domGrade << '|' << endl
-		<< "\t|Total grade: " << grade << "|" << endl;
+	if(isGraded){
+		cout << "\t|QTM: " << QTM
+			<< "| HTM: " << HTM
+			<< "| regrips: " << numRegrips
+			<< "| dominant hand usage: " << domRatio << '|'<< endl
+			<< "\t|QTM Grade: " << QTMGrade
+			<< "|HTM Grade: " << HTMGrade
+			<< "|Regrip grade: " << regripGrade
+			<< "|Dominant hand grade: " << domGrade << '|' << endl
+			<< "\t|Total grade: " << grade << "/100|" << endl;
+	}
+	else{
+		cout << "|Not yet graded!|" << endl;
+	}
 }			
 string Alg::getMove(int i){
 	return moves[i];
@@ -63,6 +67,9 @@ float Alg::getDomGrade(){
 float Alg::getGrade(){
 	return grade;
 }
+bool Alg::getGradedStatus(){
+	return isGraded;
+}
 void Alg::addMove(string m){
 	moves.push_back(m);
 }
@@ -95,4 +102,7 @@ void Alg::setDomGrade(float d){
 }
 void Alg::setGrade(float g){
 	grade = g;
+}
+void Alg::setGradedStatus(){
+	isGraded = true;
 }

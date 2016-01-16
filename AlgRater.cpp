@@ -10,14 +10,14 @@ description: implentation of AlgRater class
 #define DOM_HAND 'r'			// 'r' or 'l'
 #define REGRIP_WT 0.25
 #define DOM_WT 0.40
-#define QTM_WT 0.25
-#define HTM_WT 0.10
+#define QTM_WT 0.35
+#define HTM_WT 0
 #define PREFERRED_QTM 15
 #define PREFERRED_HTM 12
 #define PREFERRED_DOM_RATIO 0.75
 #define PREFERRED_REGRIPS 3
 #define QTM_PENALTY 0.1
-#define HTM_PENALTY 0.2
+#define HTM_PENALTY 0
 #define REGRIP_PENALTY 0.15
 #define DOM_PENALTY 0.03		//per .01 below
 
@@ -25,43 +25,44 @@ void AlgRater::addAlg(Alg a){
 	allAlgs.push_back(a);
 }
 void AlgRater::showPreferences(){
-	cout << "\n==========================================================================\n";
+	//cout << "\n==========================================================================\n";
 	cout << "User Preferences: " << endl << endl
-		<< "\tDominant hand: " << DOM_HAND << endl
-		<< "\tRegrip weight: " << REGRIP_WT << endl
-		<< "\tDominant hand weight: " << DOM_WT << endl
-		<< "\tQTM weight: " << QTM_WT << endl
-		<< "\tHTM weight: " << HTM_WT << endl
-		<< "\tPreferred QTM: " << PREFERRED_QTM << endl
-		<< "\tPreferred HTM: " << PREFERRED_HTM << endl
-		<< "\tPreferred dominant hand usage: " << PREFERRED_DOM_RATIO << endl
-		<< "\tPreferred regrips: " << PREFERRED_REGRIPS << endl
-		<< "\tQTM penalty: " << QTM_PENALTY << endl
-		<< "\tHTM penalty: " << HTM_PENALTY << endl
-		<< "\tRegrip penalty: " << REGRIP_PENALTY << endl
-		<< "\tNon-dominant hand penalty: " << DOM_PENALTY << endl << endl; 
+		<< "Dominant hand: " << DOM_HAND << endl
+		<< "Regrip weight: " << REGRIP_WT << endl
+		<< "Dominant hand weight: " << DOM_WT << endl
+		<< "QTM weight: " << QTM_WT << endl
+		<< "HTM weight: " << HTM_WT << endl
+		<< "Preferred QTM: " << PREFERRED_QTM << endl
+		<< "Preferred HTM: " << PREFERRED_HTM << endl
+		<< "Preferred dominant hand usage: " << PREFERRED_DOM_RATIO << endl
+		<< "Preferred regrips: " << PREFERRED_REGRIPS << endl
+		<< "QTM penalty: " << QTM_PENALTY << endl
+		<< "HTM penalty: " << HTM_PENALTY << endl
+		<< "Regrip penalty: " << REGRIP_PENALTY << endl
+		<< "Non-dominant hand penalty: " << DOM_PENALTY << endl << endl; 
 }		
 void AlgRater::showAllAlgs(){
-	cout << "\n==========================================================================\n";
+	//cout << "\n==========================================================================\n";
 	cout << "All algs: " << endl << endl;
 	for(unsigned int i = 0; i < allAlgs.size(); i++){
-		cout << "Alg " << i << ":\t";
+		cout << "Alg " << i + 1 << ":\t";
 		allAlgs[i].showAlg();
-		allAlgs[i].showStats();
 		cout << endl;
 	}
 	cout << endl;
 }
 void AlgRater::showTopX(unsigned int x){
-	cout << "\n==========================================================================\n";
+	//cout << "\n==========================================================================\n";
 	cout << "Top " << x << " algs: " <<endl << endl;
 	for(unsigned int i = 0; i < x; i++){
-		cout << "Alg " << i << ":\t";
+		cout << "Alg " << i + 1 << ":\t";
 		allAlgs[i].showAlg();
-		allAlgs[i].showStats();
 		cout << endl;
 	}
 	cout << endl;
+}
+int AlgRater::getNumAlgs(){
+	return allAlgs.size();
 }
 void AlgRater::gradeAlgs(){
 	TwoHands TH;
@@ -78,36 +79,40 @@ void AlgRater::gradeAlgs(){
 	float grade;
 
 	for(unsigned int i = 0;  i < allAlgs.size(); i++){
-		TH.resetHands();
-		htmCount = 0;	
-		qtmCount = 0;
-		numRegrips = 0;
-		rMoves = 0;
-		lMoves = 0;
-		string move;
+		//only grade ungraded algs
+		if(!allAlgs[i].getGradedStatus()){
+			TH.resetHands();
+			htmCount = 0;	
+			qtmCount = 0;
+			numRegrips = 0;
+			rMoves = 0;
+			lMoves = 0;
+			string move;
 
-		for(unsigned int j = 0; j < allAlgs[i].getMoves().size(); j++){
-			move = allAlgs[i].getMove(j);
-			
-			TH.doMove(move);
-			
-			updateHTM(htmCount);
-			updateQTM(qtmCount, move);
-			updateRegrips(numRegrips, TH);
-			updateRLMoves(rMoves, lMoves, TH);
+			for(unsigned int j = 0; j < allAlgs[i].getMoves().size(); j++){
+				move = allAlgs[i].getMove(j);
+				
+				TH.doMove(move);
+				
+				updateHTM(htmCount);
+				updateQTM(qtmCount, move);
+				updateRegrips(numRegrips, TH);
+				updateRLMoves(rMoves, lMoves, TH);
+			}
+			domRatio = calcDomRatio(rMoves, lMoves, htmCount);
+			calcGrade(qtmCount, htmCount, numRegrips, domRatio, qtmGrade, htmGrade, domGrade, regripGrade, grade);
+
+			allAlgs[i].setHTM(htmCount);
+			allAlgs[i].setQTM(qtmCount);
+			allAlgs[i].setNumRegrips(numRegrips);
+			allAlgs[i].setDomRatio(domRatio);
+			allAlgs[i].setQTMGrade(qtmGrade);
+			allAlgs[i].setHTMGrade(htmGrade);
+			allAlgs[i].setDomGrade(domGrade);
+			allAlgs[i].setRegripGrade(regripGrade);
+			allAlgs[i].setGrade(grade);
+			allAlgs[i].setGradedStatus();
 		}
-		domRatio = calcDomRatio(rMoves, lMoves, htmCount);
-		calcGrade(qtmCount, htmCount, numRegrips, domRatio, qtmGrade, htmGrade, domGrade, regripGrade, grade);
-
-		allAlgs[i].setHTM(htmCount);
-		allAlgs[i].setQTM(qtmCount);
-		allAlgs[i].setNumRegrips(numRegrips);
-		allAlgs[i].setDomRatio(domRatio);
-		allAlgs[i].setQTMGrade(qtmGrade);
-		allAlgs[i].setHTMGrade(htmGrade);
-		allAlgs[i].setDomGrade(domGrade);
-		allAlgs[i].setRegripGrade(regripGrade);
-		allAlgs[i].setGrade(grade);
 	}
 }
 void AlgRater::updateHTM(int &hCount){

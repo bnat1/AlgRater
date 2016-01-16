@@ -24,6 +24,7 @@ class AlgRater{
 		void showAllAlgs();
 		void showPreferences();
 		void showTopX(unsigned int x);		//display top x algs with their stats
+		int  getNumAlgs();			//get number of algs in allAlgs
 		void gradeAlgs();			//calc stats for all algs: QTM, HTM, numRegrips, lrRatio, grade
 		void sortAlgs();			//sort algs descending using grade
 		void clearAlgs();			//delete contents of allAlgs, reset numAlgs
