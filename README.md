@@ -11,4 +11,4 @@ AlgRater determines stats for the algs by putting individual moves through a bas
 The alg parser supports big moves,small moves, rotations, M movs. All other characters are ignored. At this point, only standard (not inverted) double moves are supported, but the hands does do R2' for example when it would make sense to. anything within parens is treated as comments, since cube explorer throws in things in parens after algs. 
 
 Use:
-works as everything intuitively should in the menu. To change weights, edit the #define 's in AlgRater.h
+works as everything intuitively should in the menu. To change weights/penalties, edit the #define 's in AlgRater.h
