@@ -1,0 +1,4 @@
+#exclude .o files, .odt files, notes files
+*.o
+*.odt
+*note*
