@@ -31,13 +31,15 @@ class AlgRater{
 	private:
 		vector<Alg> allAlgs;
 		int numAlgs;
-		void updateHTM(int &hCount);
+		void updateHTM(int &hCount, string m);
 		void updateQTM(int &qCount, string m);
+		void updateRotations(int &rotationCount, TwoHands &T, int j, int l);
 		void updateRegrips(int &regripCount, TwoHands &T);
-		void updateRLMoves(int &rMoves, int &lMoves, TwoHands &T);
-		float calcDomRatio(int rMoves, int lMoves, int htmCount);
-		void calcGrade(int qCount, int hCount, int regripCount, float domRatio, 
-			float &qtmGrade, float &htmGrade, float &domGrade, float &regripGrade, float &totalGrade);
+		void updateRLMoves(int &rMoves, int &lMoves, TwoHands &T,string m);
+		float calcDomRatio(int rMoves, int lMoves);
+		void calcGrade(int qCount, int hCount, int regripCount, int rotationCount, float domRatio, 
+			float &qtmGrade, float &htmGrade, float &domGrade, float &regripGrade, float &rotationGrade, float &totalGrade);
+		//callable struct, for comparing two algs
 		struct compareAlgs{
 			bool operator() (Alg alg1, Alg alg2) const{
 				return alg1.getGrade() > alg2.getGrade();

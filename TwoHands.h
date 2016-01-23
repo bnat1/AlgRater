@@ -12,7 +12,8 @@ description: def of TwoHands
 //#include <cstdlib>
 //#include "LeftHand.h"
 //#include "RightHand.h"
-#include <string>
+#include <iostream>
+#include <ctype.h>
 #include "Hand.h"
 
 //using namespace std;
@@ -26,9 +27,11 @@ class TwoHands{
 		//Hand* getRightHand();
 		char getLastHand();
 		bool getLastMoveRegrip();
+		bool getLastMoveRotation();
 	private:
 		bool handleLR(string move);
 		bool lastMoveRegrip;		//yes: true, no: false
+		bool lastMoveRotation;
 		char lastHand;				//'l' or 'r'
 		Hand lh;
 		Hand rh;

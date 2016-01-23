@@ -12,16 +12,19 @@
 
 
 TwoHands::TwoHands(){
-	lh = Hand({{-1,{"B", "B2","F'","F2"}},
-				{0,{"U'",/* "U2", */"D", "D2"}},
+	lh = Hand({{-1,{"B", "B2","F'"/*,"F2"*/}},
+				{0,{"U'", "M", "M'", "M2", /* "U2", */"D", "D'", "D2"}},
 				{1,{/*"F", "F2", */"B'", "B2"}}});
 	rh = Hand({{-1,{"B'", "B2", "F", "F'", "F2"}},
-				{0,{"U", "U2", "D'", "D2"}},
+				{0,{"U", "U2", "D'"/*, "D2"*/}},
 				{1,{/*"F'","F2", */"B", "B2"}}});
 }
 
 char TwoHands::getLastHand(){
 	return lastHand;
+}
+bool TwoHands::getLastMoveRotation(){
+	return lastMoveRotation;
 }
 bool TwoHands::getLastMoveRegrip(){
 	return lastMoveRegrip;
@@ -86,23 +89,35 @@ bool TwoHands::handleLR(std::string move){
 }
 void TwoHands::doMove(std::string move){
 	lastMoveRegrip = false;
-	if(move[0] == 'L'){
-		lastMoveRegrip = handleLR(move);
+	lastMoveRotation = false;
+	char bigMoveC = toupper(move[0]);						//toupper is for chars... have to make a conditional to check if 2 chars...idek
+	string bigMove = "";
+	bigMove += bigMoveC;
+	if(move.length() == 2){
+		bigMove += move[1];
+	}
+
+	if(bigMove[0] == 'X' || bigMove[0] == 'Y' || bigMove[0] == 'Z'){
+		lastMoveRotation = true;								//rotations
+	}
+	else if(bigMove[0] == 'L'){
+		lastMoveRegrip = handleLR(bigMove);
 		lastHand = 'l';
 	}
-	else if(move[0] == 'R'){
-		lastMoveRegrip = handleLR(move);
+	else if(bigMove[0] == 'R'){
+		lastMoveRegrip = handleLR(bigMove);
 		lastHand = 'r';
 	}
-	else if(lh.isAvail(lh.getPosition(), move)){			//no regrip required
+	else if(lh.isAvail(lh.getPosition(), bigMove)){				//no regrip required
 		lastHand = 'l';
 	}
-	else if(rh.isAvail(rh.getPosition(), move)){
+	else if(rh.isAvail(rh.getPosition(), bigMove)){
 		lastHand = 'r';
 	}
 	else{
-		int lhRegripPos = lh.getRegripPosition(move);		//not available for either hand: choose easiest regrip
-		int rhRegripPos = rh.getRegripPosition(move);
+		lastMoveRegrip = true;
+		int lhRegripPos = lh.getRegripPosition(bigMove);		//not available for either hand: choose easiest regrip
+		int rhRegripPos = rh.getRegripPosition(bigMove);
 		int lhDistance = abs(lh.getPosition() - lhRegripPos);
 		int rhDistance = abs(rh.getPosition() - rhRegripPos);
 		//cout << "lhDistance:" << lhDistance << endl;
@@ -115,6 +130,5 @@ void TwoHands::doMove(std::string move){
 			rh.setPosition(rhRegripPos);
 			lastHand = 'r';
 		}
-		lastMoveRegrip = true;
 	}
 }

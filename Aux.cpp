@@ -6,20 +6,19 @@ implementation of aux functions
 */
 #include "Aux.h"
 void greeting(){
-	cout << "Welcome to AlgRater v1.0" << endl;
+	cout << endl << "Welcome to AlgRater v1.0" << endl;
 }
 void showPrompt() {
     cout << endl <<
 	"   Alg Rater Menu\n"
 	" 1 - Add Algs From File\n"
 	" 2 - Add Alg From Command Line\n"
-	" 3 - Grade Algs\n"
-	" 4 - Sort Algs\n"
-	" 5 - Show All Algs\n"
-	" 6 - Show Top X Algs\n"
-	" 7 - Clear Algs\n"
-	" 8 - Show User Preferences\n"
-	"99 - Quit\n";
+	" 3 - Grade & Sort Algs\n"
+	" 4 - Show All Algs\n"
+	" 5 - Show Top X Algs\n"
+	" 6 - Clear Algs\n"
+	" 7 - Show User Preferences\n"
+	"99 - Quit\n\n";
 }
 bool doOneCommand(AlgRater &algRater){
 	bool doExit = false;
@@ -38,20 +37,18 @@ bool doOneCommand(AlgRater &algRater){
     		break;
     	case 3:
     		gradeAlgs(algRater);
-    		break;
-    	case 4:
     		sortAlgs(algRater);
     		break;
-    	case 5:
+    	case 4:
     		showAllAlgs(algRater);
     		break;
-    	case 6:
+    	case 5:
     		showTopX(algRater);
     		break;
-    	case 7:
+    	case 6:
     		clearAlgs(algRater);
     		break;
-    	case 8:
+    	case 7:
     		showPreferences(algRater);
     		break;
     	case 99:
@@ -122,12 +119,12 @@ void gradeAlgs(AlgRater &algRater){
 	}
 }
 void sortAlgs(AlgRater &algRater){
-	if(algRater.getNumAlgs() == 0){
+	/*if(algRater.getNumAlgs() == 0){
 		cout << "Error: no algs currently in store" << endl;
-	}
-	else{
+	}*/	//message already in grade
+	//else{
 		algRater.sortAlgs();
-	}
+	//}
 }
 void showAllAlgs(AlgRater &algRater){
 	if(algRater.getNumAlgs() == 0){
@@ -149,7 +146,7 @@ void showTopX(AlgRater &algRater){
 				return;
 			}
 			x = atoi(numAlgsStr.c_str());
-			if(x <= algRater.getNumAlgs() && x > 0){
+			if(!(x <= algRater.getNumAlgs() && x > 0)){
 				cout << "Error: number of algs must be greater than 0 and at most "<< algRater.getNumAlgs() << endl;
 			}
 		} while(!(x <= algRater.getNumAlgs() && x > 0));
@@ -207,7 +204,10 @@ Alg stringToAlg(string s){
 		return theAlg;
 }
 bool isValidChar1(char c){
-	return c == 'R' || c == 'L' || c == 'F' || c == 'B' || c == 'U' || c == 'D';
+	char C = toupper(c);
+	return C == 'R' || C == 'L' || C == 'F' || C == 'B' || C == 'U' || C == 'D' ||	//standard moves, wide moves
+			C == 'M'||																//slice moves, tolerant of m or M for ex.
+			C == 'X' || C == 'Y' || C == 'Z';								//rotations, tolerant of y/Y for ex.
 }
 bool isValidChar2(char c){
 	return c == '2' || c == '\'';											//I've had problems with '\'' in c++ before

@@ -28,10 +28,12 @@ public:
 	int getHTM();
 	int getLength();
 	int getNumRegrips();
+	int getNumRotations();
 	float getDomRatio();
 	float getQTMGrade();
 	float getHTMGrade();
 	float getRegripGrade();
+	float getRotationGrade();
 	float getDomGrade();
 	float getGrade();
 	bool getGradedStatus();
@@ -40,11 +42,13 @@ public:
 	void setMoves(vector<string> m);//set all moves
 	void setQTM(int q);
 	void setHTM(int h);
+	void setNumRotations(int n);
 	void setNumRegrips(int n);
 	void setDomRatio(float r);
 	void setQTMGrade(float q);
 	void setHTMGrade(float h);	
 	void setRegripGrade(float r);
+	void setRotationGrade(float r);
 	void setDomGrade(float d);
 	void setGrade(float g);
 	void setGradedStatus();
@@ -53,11 +57,13 @@ private:
 	vector<string> moves;
 	int QTM;
 	int HTM;
+	int numRotations;
 	int numRegrips;
 	float domRatio;
 
 	float QTMGrade;
 	float HTMGrade;
+	float rotationGrade;
 	float regripGrade;
 	float domGrade;
 	float grade;

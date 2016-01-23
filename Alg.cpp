@@ -23,10 +23,12 @@ void Alg::showAlg(){
 		cout << "\t|QTM: " << QTM
 			<< "| HTM: " << HTM
 			<< "| regrips: " << numRegrips
+			<< "| rotations: " << numRotations
 			<< "| dominant hand usage: " << domRatio << '|'<< endl
 			<< "\t|QTM Grade: " << QTMGrade
 			<< "|HTM Grade: " << HTMGrade
 			<< "|Regrip grade: " << regripGrade
+			<< "|Rotation grade: " << rotationGrade
 			<< "|Dominant hand grade: " << domGrade << '|' << endl
 			<< "\t|Total grade: " << grade << "/100|" << endl;
 	}
@@ -49,6 +51,9 @@ int Alg::getHTM(){
 int Alg::getNumRegrips(){
 	return numRegrips;
 }
+int Alg::getNumRotations(){
+	return numRotations;
+}
 float Alg::getDomRatio(){
 	return domRatio;
 }
@@ -60,6 +65,9 @@ float Alg::getHTMGrade(){
 }
 float Alg::getRegripGrade(){
 	return regripGrade;
+}
+float Alg::getRotationGrade(){
+	return rotationGrade;
 }
 float Alg::getDomGrade(){
 	return domGrade;
@@ -85,6 +93,9 @@ void Alg::setHTM(int h){
 void Alg::setNumRegrips(int n){
 	numRegrips = n;
 }
+void Alg::setNumRotations(int n){
+	numRotations = n;
+}
 void Alg::setDomRatio(float r){
 	domRatio = r ;
 }
@@ -96,6 +107,9 @@ void Alg::setHTMGrade(float h){
 }
 void Alg::setRegripGrade(float r){
 	regripGrade = r;
+}
+void Alg::setRotationGrade(float r){
+	rotationGrade = r;
 }
 void Alg::setDomGrade(float d){
 	domGrade = d;

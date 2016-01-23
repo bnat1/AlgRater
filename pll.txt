@@ -1,22 +1,22 @@
-(A Perm) R' U R' D2 R U' R' D2 R2
-(A Perm) R2 D2 R U R' D2 R U' R
-(E Perm) R U' R' D R U R' D' R U R' D R U' R' D'
+(A Perm) x R' U R' D2 R U' R' D2 R2 x'
+(A Perm) x R2 D2 R U R' D2 R U' R x'
+(E Perm) x' R U' R' D R U R' D' R U R' D R U' R' D' x
 (F Perm) R' U' F' R U R' U' R' F  R2 U' R' U' R U R' U R
-(G Perm) R U R' U D R2 U' R U' R' U R' U R2 D'
-(G Perm) R' U' R U' D' R2 U R' U R U' R U' R2 D 
-(G Perm) R2 U' R U' R U R' U R2 U D R U' R' D 
+(G Perm) R U R' y' R2 u' R U' R' U R' u R2
+(G Perm) R' d F R2 u R' U R U' R u' R2 
+(G Perm) R2 u' R U' R U R' u R2 B U' B' 
 (G Perm) R2 U R' U R' U' R U' R2 U' D R U' R' D'
-(H Perm) R2 U2 R U2 R2 U2 R2 U2 R U2 R2 U2
+(H Perm) M2 U M2 U2 M2 U M2
 (J Perm) R U R' F' R U R' U' R' F' R2 U' R'
-(J Perm) R' U2 R U R' R2 U R' D R U'
-(N Perm) D R' U R2 D' R U' D R U R2 D' R U'
-(N Perm) U R' D R2 U' R D' U R' D R2 U' R D'
+(J Perm) R' U2 R U R' z R2 U R' D R U'
+(N Perm) z D R' U R2 D' R U' D R' U R2 D' R U' z'
+(N Perm) z U R' D R2 U' R D' U R' D R2 U' R D' z'
 (R Perm) R' U2 R U2 R' F R U R' U' R' F' R2 U'
-(R Perm) R U' R' U' R U R D R' U R D' R' U2 R'
+(R Perm) R U' R' U' R U R D R' U' R D' R' U2 R'
 (T Perm) R U R' U' R' F R2 U' R' U' R U R' F'
 (U Perm) R2 U R U R' U' R' U' R' U R'
 (U Perm) R U' R U R U R U' R' U' R2
-(V Perm) R' U R' U' R' F' R2 U' R' U R' F R F
+(V Perm) R' U R' U' y' R' F' R2 U' R' U R' F R F
 (Y Perm) F R U' R' U' R U R' F' R U R' U' R' F R F'
 (Z Perm) R' U' R U' R U R U' R' U R U R2 U' R'
 
