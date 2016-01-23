@@ -7,32 +7,6 @@ description: implentation of AlgRater class
 
 #include "AlgRater.h"
 
-//weight for each category, must add up to 1!
-#define REGRIP_WT 0.2
-#define ROTATION_WT 0.2
-#define DOM_WT 0.2
-#define QTM_WT 0.4
-#define HTM_WT 0
-
-//perferences 
-#define PREFERRED_QTM 15
-#define PREFERRED_HTM 12
-#define PREFERRED_DOM_RATIO 0.75
-#define PREFERRED_REGRIPS 3
-#define PREFERRED_ROTATIONS 0
-
-//penalties to be deducted from 100 points for each category
-#define QTM_PENALTY 10
-#define HTM_PENALTY 0
-#define REGRIP_PENALTY 10
-#define DOM_PENALTY 4				//per .01 below preferred ratio
-#define ROTATION_PENALTY 25			//rotations suck
-
-//other preferences
-#define BEGIN_END_ROT_COUNT false	//first/last move as regrip counts: true/false
-#define DOM_LR_ONLY true 			// only look for L/R moves for dominant usage
-#define DOM_HAND 'r'				// 'r' or 'l'
-
 void AlgRater::addAlg(Alg a){
 	allAlgs.push_back(a);
 }
